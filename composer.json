@@ -2,19 +2,24 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "Weighted Average Cost (WAC) Inventory Valuation Engine",
-    "keywords": ["laravel", "framework", "inventory", "wac"],
+    "keywords": [
+        "laravel",
+        "framework",
+        "inventory",
+        "wac"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.4",
-        "laravel/framework": "^13.0|^12.0",
-        "laravel/tinker": "^2.9",
+        "laravel/framework": "^13.0",
+        "laravel/tinker": "^2.10|^3.0",
         "php-open-source-saver/jwt-auth": "^2.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.1",
+        "nunomaduro/collision": "^8.5|^9.0",
         "phpunit/phpunit": "^11.0"
     },
     "autoload": {
