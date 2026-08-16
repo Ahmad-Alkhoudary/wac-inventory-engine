@@ -46,6 +46,7 @@ docker compose exec db mysql -u root -proot_password -e "GRANT ALL PRIVILEGES ON
 echo "----------------------------------------------------"
 echo "✅ WAC Inventory Engine Setup Complete!"
 echo "----------------------------------------------------"
+echo "• Web App Dashboard URL: http://localhost:8080"
 echo "• Web App API Base URL: http://localhost:8080/api"
 echo "• Run Automated Tests:   docker compose exec app php artisan test"
 echo "----------------------------------------------------"

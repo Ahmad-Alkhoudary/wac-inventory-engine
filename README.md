@@ -1,8 +1,21 @@
 # Weighted Average Cost (WAC) Inventory Valuation Engine
 
-A high-precision, event-driven inventory ledger and valuation engine built with **PHP 8.4**, **Laravel 13**, **MySQL 8.0**, and **Docker Compose**.
+A high-precision, event-driven inventory ledger and valuation engine built with **PHP 8.4**, **Laravel 13**, **MySQL 8.0**, **Vue 3**, and **Docker Compose**.
 
 This application implements the **Perpetual Weighted Average Cost (WAC)** valuation method, automatically calculating point-in-time Cost of Goods Sold (COGS) for sales, handling backdated transaction ingestions via an $O(K)$ cascading recalculation algorithm, preventing negative stock levels, and enforcing single active daily transaction constraints.
+
+It includes an interactive **Vue 3 Single-Page Application (SPA) Dashboard** served at `http://localhost:8080/`.
+
+---
+
+## 🎨 Interactive Vue 3 Web Dashboard (Bonus Feature)
+
+Open **`http://localhost:8080/`** in your browser to experience the real-time interactive dashboard:
+
+* **Side-by-Side View**: Products Catalog with real-time stock balances and inventory valuation badges alongside the Ledger Transactions History table.
+* **1-Click Admin Login**: Built-in 1-click authentication button (`admin@example.com` / `password123`) using the JWT API.
+* **Transaction Modals**: Create Purchases or Sales, edit/backdate transactions, or soft-delete entries.
+* **Real-time Recalculations**: Watch COGS, WAC unit costs, running stock, and total asset valuation update dynamically upon recording or soft-deleting transactions.
 
 ---
 
@@ -10,6 +23,7 @@ This application implements the **Perpetual Weighted Average Cost (WAC)** valuat
 
 * **Language**: PHP 8.4 (with BCMath 4-decimal precision arithmetic)
 * **Framework**: Laravel 13 (`laravel/framework`)
+* **Frontend**: Vue 3 (Composition API / SPA Dashboard)
 * **Database**: MySQL 8.0 (InnoDB with row-level pessimistic locking)
 * **Authentication**: JWT (`php-open-source-saver/jwt-auth`)
 * **Containerization**: Docker & Docker Compose (Nginx + PHP-FPM + MySQL)
@@ -214,6 +228,3 @@ curl -X GET http://localhost:8080/api/products \
 ```
 
 ---
-
-## 📜 License
-The Weighted Average Cost (WAC) Inventory Engine is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

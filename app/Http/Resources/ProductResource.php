@@ -21,12 +21,20 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $stockQty = (int) $this->current_stock_qty;
+        $totalVal = (string) $this->current_total_value;
+
+        $currentWac = $stockQty > 0
+            ? bcdiv($totalVal, (string) $stockQty, 4)
+            : '0.0000';
+
         return [
             'id' => $this->id,
             'sku' => $this->sku,
             'name' => $this->name,
-            'current_stock_quantity' => (int) $this->current_stock_qty,
-            'current_total_value' => (string) number_format((float) $this->current_total_value, 4, '.', ''),
+            'current_stock_quantity' => $stockQty,
+            'current_total_value' => (string) number_format((float) $totalVal, 4, '.', ''),
+            'current_wac_cost' => (string) number_format((float) $currentWac, 4, '.', ''),
             'active_transactions_count' => $this->whenCounted('stockTransactions', $this->stock_transactions_count),
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
