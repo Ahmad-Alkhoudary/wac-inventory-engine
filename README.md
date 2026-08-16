@@ -12,7 +12,7 @@ It includes an interactive **Vue 3 Single-Page Application (SPA) Dashboard** ser
 
 Open **`http://localhost:8080/`** in your browser to experience the real-time interactive dashboard:
 
-* **Side-by-Side View**: Products Catalog with real-time stock balances and inventory valuation badges alongside the Ledger Transactions History table.
+* **Side-by-Side View**: Products Catalog with real-time stock balances, current unit WAC, and inventory valuation badges alongside the Ledger Transactions History table.
 * **1-Click Admin Login**: Built-in 1-click authentication button (`admin@example.com` / `password123`) using the JWT API.
 * **Transaction Modals**: Create Purchases or Sales, edit/backdate transactions, or soft-delete entries.
 * **Real-time Recalculations**: Watch COGS, WAC unit costs, running stock, and total asset valuation update dynamically upon recording or soft-deleting transactions.
@@ -65,6 +65,29 @@ Open **`http://localhost:8080/`** in your browser to experience the real-time in
 ### 8. Dedicated MySQL Testing Database (`wac_inventory_test`)
 * **Decision**: Configured `phpunit.xml` to execute test suites against a dedicated `wac_inventory_test` MySQL database.
 * **Why**: Ensures tests run against real MySQL InnoDB storage engines while preventing `RefreshDatabase` from wiping local development data (`wac_inventory`).
+
+---
+
+## 🤖 Human-AI Pair Programming Collaboration
+
+This project was developed through an interactive **Human-AI Pair Programming methodology** using **Google DeepMind's Antigravity AI Assistant**. The human developer acted as the **Lead Software Architect & Engineering Owner**, retaining full code ownership, conducting rigorous technical code reviews, driving problem diagnosis, and defining core mathematical algorithms.
+
+### 💡 Human Developer Leadership, Code Ownership & Debugging
+* **Lead System Architecture & Code Ownership**: Reviewed, inspected, and validated every class, model, migration, controller, and test file to guarantee strict alignment with Laravel 13 standards, clean code principles, and exact business requirements.
+* **Mathematical & Ledger Algorithm Design**: Formulated the single-pass $O(K)$ downstream recalculation timeline algorithm, fixed-point BCMath 4-decimal precision rules, and non-negative inventory rollback guardrails.
+* **Hands-on Problem Diagnosis & Root-Cause Debugging**:
+  * **Framework & Syntax Auditing**: Investigated Laravel model attributes vs property declarations, analyzing GitHub release branch differences (`laravel/laravel:13.x`) against composer installed vendor dependencies.
+  * **Arithmetic Precision Verification**: Diagnosed precision behavior between PHP `bcdiv` scale 4 truncation and database rounding, aligning assertions with exact mathematical output.
+  * **Environment & Permission Engineering**: Diagnosed container storage permission bottlenecks (`tempnam()` / cache write permissions), fixing file permissions (`chmod -R 777 storage bootstrap/cache`) in the build lifecycle.
+  * **Database Isolation & Security Management**: Identified test database resets (`RefreshDatabase` wiping dev data) and established a dedicated MySQL testing database (`wac_inventory_test`) with proper user grants.
+  * **API Exception Handling & Routing**: Identified browser unauthenticated navigation issues (`RouteNotFoundException` vs JSON 401 response) and configured custom exception handling in `bootstrap/app.php`.
+* **UX & Product Refinement**: Directed the design of the light-themed Vue 3 dashboard, added real-time Product WAC unit cost badges, and conceptualized the 1-step `setup.sh` automated installation script.
+
+### ⚡ AI Assistant Execution & Speed Boost
+* **Code Implementation**: Generated boilerplate classes, models, migrations, service methods, form requests, API Resources (`ProductResource`, `StockTransactionResource`), and Vue 3 frontend components under developer direction.
+* **Automated Test Suite Creation**: Authored 12 PHPUnit test cases covering WAC precision math, backdated purchase cascades, historical soft-deletions, JWT authentication, and negative stock rollbacks.
+* **Automation & Scripting**: Drafted Docker Compose configurations, `.env` defaults, and initial setup bash scripts under developer instruction.
+* **Documentation & API Specs**: Prepared technical documentation, API endpoint tables, and cURL examples based on system specifications.
 
 ---
 
@@ -228,3 +251,6 @@ curl -X GET http://localhost:8080/api/products \
 ```
 
 ---
+
+## 📜 License
+The Weighted Average Cost (WAC) Inventory Engine is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
