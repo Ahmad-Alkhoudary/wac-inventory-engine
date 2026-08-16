@@ -56,7 +56,7 @@ This application implements the **Perpetual Weighted Average Cost (WAC)** valuat
 
 ## ⚡ Quick Start (1-Step Automated Setup)
 
-Clone the repository and run the automated setup script. It will automatically build containers, install dependencies, generate keys, run migrations/seeders, and set up the dedicated test database:
+Clone the repository and run the automated setup script. It will automatically build containers, install dependencies, fix directory permissions, generate keys, run migrations/seeders, and set up the dedicated test database:
 
 ```bash
 git clone <repository-url> wac-inventory-engine
@@ -88,18 +88,24 @@ docker compose up -d --build
 docker compose exec app composer install
 ```
 
-### Step 4: Generate Application Key & JWT Secret
+### Step 4: Fix Storage & Cache Directory Permissions
+```bash
+docker compose exec app chmod -R 777 storage bootstrap/cache
+docker compose exec app chown -R www-data:www-data storage bootstrap/cache
+```
+
+### Step 5: Generate Application Key & JWT Secret
 ```bash
 docker compose exec app php artisan key:generate
 docker compose exec app php artisan jwt:secret --force
 ```
 
-### Step 5: Run Database Migrations & Seeders
+### Step 6: Run Database Migrations & Seeders
 ```bash
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
-### Step 6: Create Test Database & Grant Permissions
+### Step 7: Create Test Database & Grant Permissions
 ```bash
 docker compose exec db mysql -u root -proot_password -e "CREATE DATABASE IF NOT EXISTS wac_inventory_test;"
 docker compose exec db mysql -u root -proot_password -e "GRANT ALL PRIVILEGES ON \`wac_inventory_test\`.* TO 'laravel'@'%'; FLUSH PRIVILEGES;"

@@ -24,16 +24,21 @@ done
 echo "📦 Installing Composer dependencies..."
 docker compose exec app composer install --no-interaction --prefer-dist
 
-# 5. Generate application key and JWT secret
+# 5. Fix permissions for storage and bootstrap/cache directories
+echo "🔒 Fixing permissions for storage and bootstrap/cache directories..."
+docker compose exec app chmod -R 777 storage bootstrap/cache
+docker compose exec app chown -R www-data:www-data storage bootstrap/cache
+
+# 6. Generate application key and JWT secret
 echo "🔑 Generating application key and JWT secret..."
 docker compose exec app php artisan key:generate --no-interaction
 docker compose exec app php artisan jwt:secret --force --no-interaction
 
-# 6. Run migrations & seeders
+# 7. Run migrations & seeders
 echo "🗄️ Running database migrations and seeders..."
 docker compose exec app php artisan migrate:fresh --seed --no-interaction
 
-# 7. Create test database & grant permissions
+# 8. Create test database & grant permissions
 echo "🧪 Creating dedicated test database (wac_inventory_test)..."
 docker compose exec db mysql -u root -proot_password -e "CREATE DATABASE IF NOT EXISTS wac_inventory_test;"
 docker compose exec db mysql -u root -proot_password -e "GRANT ALL PRIVILEGES ON \`wac_inventory_test\`.* TO 'laravel'@'%'; FLUSH PRIVILEGES;"
