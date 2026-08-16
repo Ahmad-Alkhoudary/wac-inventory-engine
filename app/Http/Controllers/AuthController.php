@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -48,7 +49,7 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return response()->json(auth('api')->user());
+        return response()->json(new UserResource(auth('api')->user()));
     }
 
     /**
@@ -74,11 +75,14 @@ class AuthController extends Controller
      */
     protected function respondWithToken(string $token, ?User $user = null, int $status = 200): JsonResponse
     {
+        /** @var User|null $currentUser */
+        $currentUser = $user ?? auth('api')->user();
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => $user ?? auth('api')->user(),
+            'user' => $currentUser ? new UserResource($currentUser) : null,
         ], $status);
     }
 }
